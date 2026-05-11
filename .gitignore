@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# Build artifacts do compilador (assembly/objetos/binarios gerados a partir dos .ci)
+*.o
+*.s
+!runtime.s
+
+# Executaveis gerados pelos testes (sem extensao no Linux)
+testes/p1
+testes/erro
+testes/*.exe
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
