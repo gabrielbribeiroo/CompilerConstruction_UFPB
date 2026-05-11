@@ -1,37 +1,35 @@
 # CompilerConstruction_UFPB
 
-Repositorio das atividades da disciplina **Construcao de Compiladores 1**,
-do curso de Ciencia da Computacao da Universidade Federal da Paraiba (UFPB),
-semestre 2026.1.
+Repository for the assignments of the **Compiler Construction 1** course,
+Computer Science program at the Federal University of Paraiba (UFPB),
+semester 2026.1.
 
 - **Professor:** Andrei de Araujo Formiga
-- **Periodo:** P6 - 2026.1
+- **Term:** P6 - 2026.1
 
-## Integrantes do grupo
+## Team
 
-| Nome                                       | Matricula     |
-| ------------------------------------------ | ------------- |
-| Davi Alves Rodrigues                       | 20230102377   |
-| Gabriel Barbosa Ribeiro de Oliveira        | 20230012814   |
-| Joao Vitor Sampaio Costa                   | 20230089776   |
-| Nathan Meira Nobrega                       | 20240008904   |
+- Davi Alves Rodrigues
+- Gabriel Barbosa Ribeiro de Oliveira
+- Joao Vitor Sampaio Costa
+- Nathan Meira Nobrega
 
-## Atividades
+## Assignments
 
-| # | Atividade                                  | Diretorio                                       | Status     |
-| - | ------------------------------------------ | ----------------------------------------------- | ---------- |
-| 02 | Compilador CI (Constantes Inteiras)       | [`compilador-ci/`](./compilador-ci)             | Entregue   |
+| #  | Assignment                          | Directory                                | Status    |
+| -- | ----------------------------------- | ---------------------------------------- | --------- |
+| 02 | CI Compiler (Integer Constants)     | [`compilador-ci/`](./compilador-ci)      | Delivered |
 
-Cada subdiretorio contem o codigo-fonte da atividade, um `README.md` com
-instrucoes de execucao e um `RELATORIO.md` com a descricao do trabalho.
+Each subdirectory contains the assignment's source code, a `README.md` with
+usage instructions, and a `RELATORIO.md` (report) describing the work.
 
-## Estrutura
+## Layout
 
 ```
 CompilerConstruction_UFPB/
-├── README.md                # este arquivo
+├── README.md                # this file
 ├── .gitignore
-└── compilador-ci/           # Atividade 02 - Compilador CI
+└── compilador-ci/           # Assignment 02 - CI Compiler
     ├── compci.py
     ├── runtime.s
     ├── README.md
@@ -41,8 +39,8 @@ CompilerConstruction_UFPB/
         └── erro.ci
 ```
 
-## Tecnologias
+## Tech stack
 
-- **Python 3** para a implementacao do compilador.
-- **GNU Assembler (`as`)** e **`ld`** para montar e linkar o assembly gerado
-  (Linux x86-64, sintaxe AT&T/GAS).
+- **Python 3** for the compiler implementation.
+- **GNU Assembler (`as`)** and **`ld`** to assemble and link the generated
+  output (Linux x86-64, AT&T/GAS syntax).
