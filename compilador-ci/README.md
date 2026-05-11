@@ -11,9 +11,10 @@ que imprime essa constante na tela.
 - Para gerar o executavel final a partir do `.s`: GNU Assembler (`as`) e linker
   (`ld`), em um ambiente Linux x86-64 (no Windows, basta usar WSL).
 
-O arquivo `runtime.s`, incluido na raiz do projeto, contem os procedimentos
-`imprime_num` e `sair` chamados pelo modelo de saida e precisa estar visivel
-para o `as` no momento da montagem (veja a secao "Como montar e linkar").
+O arquivo `runtime.s` fornecido pelo professor (incluido neste diretorio)
+contem os procedimentos `imprime_num` e `sair` chamados pelo modelo de saida
+e precisa estar visivel para o `as` no momento da montagem (veja a secao
+"Como montar e linkar").
 
 ## Estrutura
 

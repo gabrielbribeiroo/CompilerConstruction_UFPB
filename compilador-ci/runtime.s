@@ -1,67 +1,60 @@
-#
-# runtime.s - rotinas de runtime usadas pelo modelo de saida do compilador CI
-#
-# Define dois procedimentos chamados pelo modelo gerado:
-#   - imprime_num: imprime o valor em %rax como inteiro decimal (sem sinal),
-#                  seguido de uma quebra de linha, em stdout
-#   - sair:        encerra o processo com codigo de saida 0
-#
-# Linux x86-64, sintaxe do GNU Assembler.
-#
+  #
+  # funcoes de apoio para o codigo compilado
+  #
 
-    .section .bss
-buffer:
-    .skip 32
-
-    .section .text
-
-    .globl imprime_num
 imprime_num:
-    pushq %rbx
-    pushq %rcx
-    pushq %rdx
-    pushq %rsi
-    pushq %rdi
+  xor %r9, %r9            # rcx indice, r9 contagem
+  mov $20, %rcx
+  movb $10, buffer(%rcx)  # \n no final da string
+  dec %rcx
+  inc %r9
 
-    leaq buffer+31(%rip), %rcx      # rcx aponta para o ultimo byte do buffer
-    movb $10, (%rcx)                # coloca '\n' no final
-    movq $1, %rbx                   # tamanho da string a escrever (so o \n)
+  mov $10, %r8
+  or %rax, %rax
+  jz printzero_L0
+  jl mark_neg
+  mov $0, %r10            # r10 flag p/ negativo
+  jmp loop_L0
 
-    testq %rax, %rax                # caso especial: rax == 0
-    jnz .Lconv_loop
-    decq %rcx
-    movb $'0', (%rcx)
-    incq %rbx
-    jmp .Lconv_write
+mark_neg:
+  mov $1, %r10
+  neg %rax
 
-.Lconv_loop:
-    testq %rax, %rax
-    jz .Lconv_write
-    xorq %rdx, %rdx
-    movq $10, %rsi
-    divq %rsi                       # rax = rax/10, rdx = rax%10
-    addb $'0', %dl
-    decq %rcx
-    movb %dl, (%rcx)
-    incq %rbx
-    jmp .Lconv_loop
+loop_L0:
+  cqo
+  idiv %r8
+  addb $0x30, %dl
+  movb %dl, buffer(%rcx)
+  dec %rcx
+  inc %r9
+  or %rax, %rax
+  jnz loop_L0
+  test %r10, %r10
+  jz print_L0
+  movb $45, buffer(%rcx)
+  dec %rcx
+  jmp print_L0
 
-.Lconv_write:
-    movq $1, %rax                   # sys_write
-    movq $1, %rdi                   # fd = stdout
-    movq %rcx, %rsi                 # buffer
-    movq %rbx, %rdx                 # tamanho
-    syscall
+printzero_L0:
+  movb $0x30, buffer(%rcx)
+  dec %rcx
+  inc %r9
 
-    popq %rdi
-    popq %rsi
-    popq %rdx
-    popq %rcx
-    popq %rbx
-    ret
+print_L0:
+  mov $1, %rax            # sys_write
+  mov $1, %rdi            # stdout
+  mov $buffer, %rsi       # dados
+  inc %rcx
+  add %rcx, %rsi
+  mov %r9, %rdx           # tamanho
+  syscall
+  ret
 
-    .globl sair
 sair:
-    movq $60, %rax                  # sys_exit
-    xorq %rdi, %rdi                 # status = 0
-    syscall
+  mov $60, %rax     # sys_exit
+  xor %rdi, %rdi    # codigo de saida (0)
+  syscall
+
+
+  .section .bss
+  .lcomm buffer, 21
