@@ -39,6 +39,6 @@ CompilerConstruction_UFPB/
 
 ## Tech stack
 
-- **Python 3** for the compiler implementation.
+- **Python** for the compiler implementation.
 - **GNU Assembler (`as`)** and **`ld`** to assemble and link the generated
   output (Linux x86-64, AT&T/GAS syntax).

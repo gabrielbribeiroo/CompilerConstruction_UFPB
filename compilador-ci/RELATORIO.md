@@ -38,7 +38,7 @@ clássica de análise -> síntese descrita no enunciado:
 
 ## Linguagem utilizada
 
-Python 3. A escolha foi por simplicidade: não há etapa de build, a leitura de
+Python. A escolha foi por simplicidade: não há etapa de build, a leitura de
 arquivos e o uso de expressões regulares são diretos na biblioteca padrão, e
 o mesmo script roda em Windows e Linux sem alteração. Como a linguagem CI tem
 apenas dígitos, qualquer linguagem serviria; Python deixou o código do
