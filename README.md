@@ -7,12 +7,13 @@ semester 2026.1.
 - **Professor:** Andrei de Araujo Formiga
 - **Term:** P6 - 2026.1
 
-## Team
+## Authors
 
-- Davi Alves Rodrigues
-- Gabriel Barbosa Ribeiro de Oliveira
-- Joao Vitor Sampaio Costa
-- Nathan Meira Nobrega
+| [<img src="https://github.com/gabrielbribeiroo.png?size=100" width=100><br><sub>Gabriel Ribeiro</sub>](https://github.com/gabrielbribeiroo)  | 
+[<img src="https://github.com/JoaoVitorSampaio.png?size=100" width=100><br><sub>João Vitor Sampaio</sub>](https://github.com/JoaoVitorSampaio) |
+[<img src="https://github.com/davialves1820.png?size=100" width=100><br><sub>Davi Alves Rodrigues</sub>](https://github.com/davialves1820) |
+[<img src="https://github.com/Nathanmn2004.png?size=100" width=100><br><sub>Nathan Meira Nobrega</sub>](https://github.com/Nathanmn2004) |
+| :---: | :---: |
 
 ## Assignments
 
