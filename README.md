@@ -42,3 +42,9 @@ CompilerConstruction_UFPB/
 - **Python** for the compiler implementation.
 - **GNU Assembler (`as`)** and **`ld`** to assemble and link the generated
   output (Linux x86-64, AT&T/GAS syntax).
+
+---
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
