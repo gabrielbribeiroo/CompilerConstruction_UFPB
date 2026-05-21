@@ -17,6 +17,8 @@ semester 2026.1.
 | #  | Assignment                          | Directory                                | Status    |
 | -- | ----------------------------------- | ---------------------------------------- | --------- |
 | 02 | CI Compiler (Integer Constants)     | [`compilador-ci/`](./compilador-ci)      | Delivered |
+| 03 | Zeller's Congruence (Assembly)      | [`congruencia-zeller/`](./congruencia-zeller) | Delivered |
+| 04 | Constant Expressions (Lexical Analysis) | [`expressoes-constantes/`](./expressoes-constantes) | Delivered |
 
 Each subdirectory contains the assignment's source code, a `README.md` with
 usage instructions, and a `RELATORIO.md` (report) describing the work.
@@ -27,14 +29,24 @@ usage instructions, and a `RELATORIO.md` (report) describing the work.
 CompilerConstruction_UFPB/
 ├── README.md                # this file
 ├── .gitignore
-└── compilador-ci/           # Assignment 02 - CI Compiler
-    ├── compci.py
-    ├── runtime.s
+├── compilador-ci/           # Assignment 02 - CI Compiler
+│   ├── compci.py
+│   ├── runtime.s
+│   ├── README.md
+│   ├── RELATORIO.md
+│   └── testes/
+│       ├── p1.ci
+│       └── erro.ci
+├── congruencia-zeller/      # Assignment 03 - Zeller's Congruence
+│   ├── zeller.asm
+│   ├── zeller.c
+│   └── parte2_respostas.md
+└── expressoes-constantes/   # Assignment 04 - Constant Expressions 1
+    ├── lexer.py
+    ├── test lexer.py
     ├── README.md
     ├── RELATORIO.md
-    └── testes/
-        ├── p1.ci
-        └── erro.ci
+    └── PLANO.md
 ```
 
 ## Tech stack
