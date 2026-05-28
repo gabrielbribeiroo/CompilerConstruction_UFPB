@@ -19,6 +19,7 @@ semester 2026.1.
 | 02 | CI Compiler (Integer Constants)     | [`compilador-ci/`](./compilador-ci)      | Delivered |
 | 03 | Zeller's Congruence (Assembly)      | [`congruencia-zeller/`](./congruencia-zeller) | Delivered |
 | 04 | Constant Expressions (Lexical Analysis) | [`expressoes-constantes/`](./expressoes-constantes) | Delivered |
+| 05 | Constant Expressions (Syntactic Analysis & Interpreter) | [`analise-sintatica-ec1/`](./analise-sintatica-ec1) | Delivered |
 
 Each subdirectory contains the assignment's source code, a `README.md` with
 usage instructions, and a `RELATORIO.md` (report) describing the work.
@@ -41,12 +42,22 @@ CompilerConstruction_UFPB/
 │   ├── zeller.asm
 │   ├── zeller.c
 │   └── parte2_respostas.md
-└── expressoes-constantes/   # Assignment 04 - Constant Expressions 1
+├── expressoes-constantes/   # Assignment 04 - Constant Expressions 1 (Lexer)
+│   ├── lexer.py
+│   ├── test lexer.py
+│   ├── README.md
+│   ├── RELATORIO.md
+│   └── PLANO.md
+└── analise-sintatica-ec1/   # Assignment 05 - Constant Expressions 1 (Parser + Interpreter)
     ├── lexer.py
-    ├── test lexer.py
+    ├── ast_ec1.py
+    ├── parser.py
+    ├── ec1.py
+    ├── exemplos/
+    ├── tests/test_parser.py
     ├── README.md
-    ├── RELATORIO.md
-    └── PLANO.md
+    ├── PLANO.md
+    └── RELATORIO.md
 ```
 
 ## Tech stack
