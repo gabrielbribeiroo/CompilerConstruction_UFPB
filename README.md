@@ -20,6 +20,7 @@ semester 2026.1.
 | 03 | Zeller's Congruence (Assembly)      | [`congruencia-zeller/`](./congruencia-zeller) | Delivered |
 | 04 | Constant Expressions (Lexical Analysis) | [`expressoes-constantes/`](./expressoes-constantes) | Delivered |
 | 05 | Constant Expressions (Syntactic Analysis & Interpreter) | [`analise-sintatica-ec1/`](./analise-sintatica-ec1) | Delivered |
+| 06 | Constant Expressions (Full Compiler — x86-64 Codegen)   | [`compilador-ec1/`](./compilador-ec1)               | Delivered |
 
 Each subdirectory contains the assignment's source code, a `README.md` with
 usage instructions, and a `RELATORIO.md` (report) describing the work.
@@ -48,13 +49,25 @@ CompilerConstruction_UFPB/
 │   ├── README.md
 │   ├── RELATORIO.md
 │   └── PLANO.md
-└── analise-sintatica-ec1/   # Assignment 05 - Constant Expressions 1 (Parser + Interpreter)
+├── analise-sintatica-ec1/   # Assignment 05 - Constant Expressions 1 (Parser + Interpreter)
+│   ├── lexer.py
+│   ├── ast_ec1.py
+│   ├── parser.py
+│   ├── ec1.py
+│   ├── exemplos/
+│   ├── tests/test_parser.py
+│   ├── README.md
+│   ├── PLANO.md
+│   └── RELATORIO.md
+└── compilador-ec1/          # Assignment 06 - Constant Expressions 1 (Full Compiler)
     ├── lexer.py
     ├── ast_ec1.py
     ├── parser.py
-    ├── ec1.py
+    ├── codegen.py
+    ├── compec1.py
+    ├── runtime.s
     ├── exemplos/
-    ├── tests/test_parser.py
+    ├── tests/test_codegen.py
     ├── README.md
     ├── PLANO.md
     └── RELATORIO.md
