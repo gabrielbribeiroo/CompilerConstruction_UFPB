@@ -7,15 +7,17 @@ semester 2026.1.
 - **Professor:** Andrei de Araújo Formiga
 - **Term:** P6 - 2026.1
 
-Across assignments 02 through 07 we build a small compiler step by step,
-finishing with complete compilers for the **EC1**/**EC2** languages
-(Constant Expressions 1/2): a lexer (04), a recursive-descent parser
-plus tree-walking interpreter (05), an x86-64 code generator (06) that
-ties everything together, and a precedence/associativity-aware parser
-(07) that lets expressions be written without mandatory parentheses.
-Assignment 02 was a warm-up compiler for integer constants, and
-Assignment 03 was a hand-written assembly exercise (Zeller's Congruence)
-that informed the codegen scheme used in Assignment 06.
+Across assignments 02 through 08 we build a small compiler step by step,
+finishing with complete compilers for the **EC1**/**EC2**/**EV** languages
+(Constant Expressions 1/2, Expressions with Variables): a lexer (04), a
+recursive-descent parser plus tree-walking interpreter (05), an x86-64
+code generator (06) that ties everything together, a
+precedence/associativity-aware parser (07) that lets expressions be
+written without mandatory parentheses, and variable declarations plus a
+semantic-analysis pass with a symbol table (08). Assignment 02 was a
+warm-up compiler for integer constants, and Assignment 03 was a
+hand-written assembly exercise (Zeller's Congruence) that informed the
+codegen scheme used in Assignment 06.
 
 ## Authors
 
@@ -32,6 +34,7 @@ that informed the codegen scheme used in Assignment 06.
 | 05 | EC1 — Recursive-Descent Parser + Interpreter     | [`analise-sintatica-ec1/`](./analise-sintatica-ec1)  | Delivered |
 | 06 | EC1 — Full Compiler (x86-64 Code Generation)     | [`compilador-ec1/`](./compilador-ec1)                | Delivered |
 | 07 | EC2 — Precedence & Associativity                 | [`compilador-ec2/`](./compilador-ec2)                | Delivered |
+| 08 | EV — Variables & Semantic Analysis               | [`compilador-ev/`](./compilador-ev)                  | Delivered |
 
 Each subdirectory contains the assignment's source code, a `README.md` with
 usage instructions, and a `RELATORIO.md` (report) describing the work.
@@ -82,15 +85,28 @@ CompilerConstruction_UFPB/
 │   ├── README.md
 │   ├── PLANO.md
 │   └── RELATORIO.md
-└── compilador-ec2/          # Assignment 07 - Constant Expressions 2 (Precedence)
-    ├── lexer.py             # identical to Assignment 06
-    ├── ast_ec1.py           # identical to Assignment 06
-    ├── parser.py            # NEW: exp_a / exp_m / prim grammar
-    ├── codegen.py           # identical to Assignment 06
-    ├── compec2.py
+├── compilador-ec2/          # Assignment 07 - Constant Expressions 2 (Precedence)
+│   ├── lexer.py             # identical to Assignment 06
+│   ├── ast_ec1.py           # identical to Assignment 06
+│   ├── parser.py            # NEW: exp_a / exp_m / prim grammar
+│   ├── codegen.py           # identical to Assignment 06
+│   ├── compec2.py
+│   ├── runtime.s            # identical to Assignment 06
+│   ├── exemplos/
+│   ├── tests/test_parser_precedencia.py
+│   ├── README.md
+│   ├── PLANO.md
+│   └── RELATORIO.md
+└── compilador-ev/           # Assignment 08 - Expressions with Variables
+    ├── lexer.py             # extended: IDENT, IGUAL, PONTO_VIRGULA
+    ├── ast_ev.py            # Exp, Const, OpBin, Op, Var, Decl, Programa
+    ├── parser.py            # programa / decl / exp / exp_m / prim
+    ├── semantica.py         # NEW: symbol table + variable-use checking
+    ├── codegen.py           # extended: .bss section, load/store variables
+    ├── compev.py
     ├── runtime.s            # identical to Assignment 06
     ├── exemplos/
-    ├── tests/test_parser_precedencia.py
+    ├── tests/test_ev.py
     ├── README.md
     ├── PLANO.md
     └── RELATORIO.md
@@ -118,14 +134,19 @@ python compec1.py exemplos/valido3.ec1   # writes exemplos/valido3.s
 cd compilador-ec2
 python compec2.py exemplos/valido1.ec2   # "7 + 5 * 3" -> writes exemplos/valido1.s (evaluates to 22)
 
+# Assignment 08 — compile an EV program (variable declarations + a final expression)
+cd compilador-ev
+python compev.py exemplos/valido2.ev     # writes exemplos/valido2.s (evaluates to 60467)
+
 # Run each assignment's test suite
 python tests/test_parser.py               # in analise-sintatica-ec1/
 python tests/test_codegen.py              # in compilador-ec1/
 python tests/test_parser_precedencia.py   # in compilador-ec2/
+python tests/test_ev.py                   # in compilador-ev/
 ```
 
-To assemble and run the `.s` files produced by Assignments 02, 06, and 07,
-on Linux x86-64 (use WSL on Windows):
+To assemble and run the `.s` files produced by Assignments 02, 06, 07,
+and 08, on Linux x86-64 (use WSL on Windows):
 
 ```sh
 as --64 -o out.o file.s
