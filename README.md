@@ -7,14 +7,16 @@ semester 2026.1.
 - **Professor:** Andrei de Araújo Formiga
 - **Term:** P6 - 2026.1
 
-Across assignments 02 through 08 we build a small compiler step by step,
-finishing with complete compilers for the **EC1**/**EC2**/**EV** languages
-(Constant Expressions 1/2, Expressions with Variables): a lexer (04), a
-recursive-descent parser plus tree-walking interpreter (05), an x86-64
-code generator (06) that ties everything together, a
-precedence/associativity-aware parser (07) that lets expressions be
-written without mandatory parentheses, and variable declarations plus a
-semantic-analysis pass with a symbol table (08). Assignment 02 was a
+Across assignments 02 through 09 we build a small compiler step by step,
+finishing with complete compilers for the **EC1**/**EC2**/**EV**/**Cmd**
+languages (Constant Expressions 1/2, Expressions with Variables,
+Commands): a lexer (04), a recursive-descent parser plus tree-walking
+interpreter (05), an x86-64 code generator (06) that ties everything
+together, a precedence/associativity-aware parser (07) that lets
+expressions be written without mandatory parentheses, variable
+declarations plus a semantic-analysis pass with a symbol table (08),
+and conditionals/loops/comparison operators (09) — making Cmd the
+first Turing-complete language in this series. Assignment 02 was a
 warm-up compiler for integer constants, and Assignment 03 was a
 hand-written assembly exercise (Zeller's Congruence) that informed the
 codegen scheme used in Assignment 06.
@@ -35,6 +37,7 @@ codegen scheme used in Assignment 06.
 | 06 | EC1 — Full Compiler (x86-64 Code Generation)     | [`compilador-ec1/`](./compilador-ec1)                | Delivered |
 | 07 | EC2 — Precedence & Associativity                 | [`compilador-ec2/`](./compilador-ec2)                | Delivered |
 | 08 | EV — Variables & Semantic Analysis               | [`compilador-ev/`](./compilador-ev)                  | Delivered |
+| 09 | Cmd — Conditionals, Loops & Comparisons (Turing-complete) | [`compilador-cmd/`](./compilador-cmd)       | Delivered |
 
 Each subdirectory contains the assignment's source code, a `README.md` with
 usage instructions, and a `RELATORIO.md` (report) describing the work.
@@ -97,16 +100,29 @@ CompilerConstruction_UFPB/
 │   ├── README.md
 │   ├── PLANO.md
 │   └── RELATORIO.md
-└── compilador-ev/           # Assignment 08 - Expressions with Variables
-    ├── lexer.py             # extended: IDENT, IGUAL, PONTO_VIRGULA
-    ├── ast_ev.py            # Exp, Const, OpBin, Op, Var, Decl, Programa
-    ├── parser.py            # programa / decl / exp / exp_m / prim
-    ├── semantica.py         # NEW: symbol table + variable-use checking
-    ├── codegen.py           # extended: .bss section, load/store variables
-    ├── compev.py
+├── compilador-ev/           # Assignment 08 - Expressions with Variables
+│   ├── lexer.py             # extended: IDENT, IGUAL, PONTO_VIRGULA
+│   ├── ast_ev.py            # Exp, Const, OpBin, Op, Var, Decl, Programa
+│   ├── parser.py            # programa / decl / exp / exp_m / prim
+│   ├── semantica.py         # symbol table + variable-use checking
+│   ├── codegen.py           # extended: .bss section, load/store variables
+│   ├── compev.py
+│   ├── runtime.s            # identical to Assignment 06
+│   ├── exemplos/
+│   ├── tests/test_ev.py
+│   ├── README.md
+│   ├── PLANO.md
+│   └── RELATORIO.md
+└── compilador-cmd/          # Assignment 09 - Commands (Turing-complete)
+    ├── lexer.py             # extended: {, }, <, >, ==, if/else/while/return
+    ├── ast_cmd.py           # Exp/Const/Var/OpBin/Op + Atrib/If/While/Programa
+    ├── parser.py            # programa / cmd / if / while / atrib / exp (comparison) / exp_a / exp_m / prim
+    ├── semantica.py         # extended: assignment-target + RHS checking, recursive over cmds
+    ├── codegen.py           # extended: comparisons (cmp+setz/setl/setg), if/while via labels + jz/jmp
+    ├── compcmd.py
     ├── runtime.s            # identical to Assignment 06
     ├── exemplos/
-    ├── tests/test_ev.py
+    ├── tests/test_cmd.py
     ├── README.md
     ├── PLANO.md
     └── RELATORIO.md
@@ -138,15 +154,20 @@ python compec2.py exemplos/valido1.ec2   # "7 + 5 * 3" -> writes exemplos/valido
 cd compilador-ev
 python compev.py exemplos/valido2.ev     # writes exemplos/valido2.s (evaluates to 60467)
 
+# Assignment 09 — compile a Cmd program (conditionals, loops, comparisons)
+cd compilador-cmd
+python compcmd.py exemplos/valido1.cmd   # writes exemplos/valido1.s (quadratic discriminant, evaluates to 8)
+
 # Run each assignment's test suite
 python tests/test_parser.py               # in analise-sintatica-ec1/
 python tests/test_codegen.py              # in compilador-ec1/
 python tests/test_parser_precedencia.py   # in compilador-ec2/
 python tests/test_ev.py                   # in compilador-ev/
+python tests/test_cmd.py                  # in compilador-cmd/
 ```
 
 To assemble and run the `.s` files produced by Assignments 02, 06, 07,
-and 08, on Linux x86-64 (use WSL on Windows):
+08, and 09, on Linux x86-64 (use WSL on Windows):
 
 ```sh
 as --64 -o out.o file.s
