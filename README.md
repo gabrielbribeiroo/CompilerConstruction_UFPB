@@ -22,7 +22,11 @@ declarations with parameters, local variables and (direct) recursion
 frame pointer. Assignment 02 was a warm-up compiler for integer
 constants, and Assignment 03 was a hand-written assembly exercise
 (Zeller's Congruence) that informed the codegen scheme used in
-Assignment 06.
+Assignment 06. The **Final Project** (`projeto-final/`) extends Fun
+with three simple extensions of the group's choosing: new comparison
+operators (`<=`, `>=`, `!=`), compound assignment operators (`+=`,
+`-=`, `*=`, `/=`), and `return` as a statement usable from anywhere in
+a function's body (not just as the mandatory final one).
 
 ## Authors
 
@@ -42,6 +46,7 @@ Assignment 06.
 | 08 | EV — Variables & Semantic Analysis               | [`compilador-ev/`](./compilador-ev)                  | Delivered |
 | 09 | Cmd — Conditionals, Loops & Comparisons (Turing-complete) | [`compilador-cmd/`](./compilador-cmd)       | Delivered |
 | 10 | Fun — Functions (params, locals, direct recursion)        | [`compilador-fun/`](./compilador-fun)       | Delivered |
+| Final | Fun extended — comparison ops, compound assignment, `return` as statement | [`projeto-final/`](./projeto-final) | Delivered |
 
 Each subdirectory contains the assignment's source code, a `README.md` with
 usage instructions, and a `RELATORIO.md` (report) describing the work.
@@ -130,12 +135,25 @@ CompilerConstruction_UFPB/
 │   ├── README.md
 │   ├── PLANO.md
 │   └── RELATORIO.md
-└── compilador-fun/          # Assignment 10 - Functions
-    ├── lexer.py             # extended: comma, fun/var/main
-    ├── ast_fun.py           # Exp/Const/Var/OpBin/Chamada + Cmd/Atrib/If/While + VarDecl/FunDecl/Programa
-    ├── parser.py            # decl (vardecl|fundecl) / params / args / call-vs-var lookahead
-    ├── semantica.py         # symbol table with globals + functions, lexical scoping
-    ├── codegen.py           # calling convention: push/call/cleanup, prologue/epilogue via %rbp
+├── compilador-fun/          # Assignment 10 - Functions
+│   ├── lexer.py             # extended: comma, fun/var/main
+│   ├── ast_fun.py           # Exp/Const/Var/OpBin/Chamada + Cmd/Atrib/If/While + VarDecl/FunDecl/Programa
+│   ├── parser.py            # decl (vardecl|fundecl) / params / args / call-vs-var lookahead
+│   ├── semantica.py         # symbol table with globals + functions, lexical scoping
+│   ├── codegen.py           # calling convention: push/call/cleanup, prologue/epilogue via %rbp
+│   ├── compfun.py
+│   ├── runtime.s            # identical to Assignment 06
+│   ├── exemplos/
+│   ├── tests/test_fun.py
+│   ├── README.md
+│   ├── PLANO.md
+│   └── RELATORIO.md
+└── projeto-final/           # Final Project - Fun extended with 3 simple extensions
+    ├── lexer.py             # + 7 tokens: <=, >=, !=, +=, -=, *=, /=
+    ├── ast_fun.py           # + Op.MENOR_IGUAL/MAIOR_IGUAL/DIFERENTE, Return, RetornoAntecipado
+    ├── parser.py            # + compound op_atrib, return-as-statement (with disambiguation)
+    ├── semantica.py         # + Return verification
+    ├── codegen.py           # + setle/setge/setne, Lfim_<name>/Lfim_main label + jmp
     ├── compfun.py
     ├── runtime.s            # identical to Assignment 06
     ├── exemplos/
@@ -179,17 +197,21 @@ python compcmd.py exemplos/valido1.cmd   # writes exemplos/valido1.s (quadratic 
 cd compilador-fun
 python compfun.py exemplos/valido2.fun   # writes exemplos/valido2.s (recursive fib(10), evaluates to 89)
 
+# Final Project — compile a Fun program using the 3 chosen extensions
+cd projeto-final
+python compfun.py exemplos/valido8_extensoes_combinadas.fun   # writes .s (evaluates to 3)
+
 # Run each assignment's test suite
 python tests/test_parser.py               # in analise-sintatica-ec1/
 python tests/test_codegen.py              # in compilador-ec1/
 python tests/test_parser_precedencia.py   # in compilador-ec2/
 python tests/test_ev.py                   # in compilador-ev/
 python tests/test_cmd.py                  # in compilador-cmd/
-python tests/test_fun.py                  # in compilador-fun/
+python tests/test_fun.py                  # in compilador-fun/ or projeto-final/
 ```
 
 To assemble and run the `.s` files produced by Assignments 02, 06, 07,
-08, 09, and 10, on Linux x86-64 (use WSL on Windows):
+08, 09, 10, and the Final Project, on Linux x86-64 (use WSL on Windows):
 
 ```sh
 as --64 -o out.o file.s
