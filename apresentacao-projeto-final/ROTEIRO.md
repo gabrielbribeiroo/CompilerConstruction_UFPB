@@ -8,18 +8,19 @@
 
 | Integrante              | Bloco                                                        | Tempo  | Slides   |
 |--------------------------|---------------------------------------------------------------|--------|----------|
-| **Davi**                | Introdução + o que mudou desde o Marco 1                     | ~1:15  | 1–3      |
-| **Nathan**               | Extensão 1 (comparações) + Extensão 2 (atribuição composta)  | ~1:45  | 4–6      |
-| **João Vitor**           | Extensão 3 — return como comando                              | ~1:45  | 7–9      |
-| **Gabriel**              | Demo combinando as três + testes                              | ~1:45  | 10–12    |
+| **Davi**                | Introdução + recapinho rápido do que já tínhamos              | ~1:00  | 1–3      |
+| **Nathan**               | Extensão 1 (comparações) + Extensão 2 (atribuição composta)  | ~2:00  | 4–6      |
+| **João Vitor**           | Extensão 3 — return dentro de if/while                        | ~2:00  | 7–9      |
+| **Gabriel**              | Demo das três juntas + testes                                 | ~1:45  | 10–12    |
 | (qualquer um)            | Encerramento                                                  | ~0:15  | 13       |
 
 ## Dicas gerais de gravação
 
-- Mesmo esquema do Marco 1: cada integrante grava seu trecho separadamente, webcam num canto, slides ocupando o resto.
-- Como o Projeto Final é sobre **mudanças pontuais** em cima de um compilador que já existia, evitar reexplicar tudo o que já foi apresentado no Marco 1 — o Slide 2 é justamente um resumo de 20 segundos disso, não uma nova aula.
-- A demo do Gabriel (slide 10) vale mais que os slides de decisão de projeto — investir tempo aí.
-- Se precisar cortar tempo: o slide de "o que mudou desde o Marco 1" pode ser dito de cabeça em vez de lido, e os detalhes de contagem de testes podem virar só "66 testes, todos passando".
+- Mesmo esquema do Marco 1: cada um grava seu trecho separado, webcam num canto, slides ocupando o resto.
+- **Tom da conversa: falar como se estivesse explicando pra um colega, não lendo um relatório.** Evitar despejar termo técnico atrás de termo técnico — quando precisar usar um (tipo "lookahead" ou "açúcar sintático"), explicar em uma frase simples o que aquilo quer dizer na prática.
+- **O foco do vídeo é o que a gente ACRESCENTOU.** O recap do Marco 1 (slide 2) é rápido de propósito — ninguém precisa reexplicar o compilador inteiro de novo, o interessante aqui são as três coisas novas.
+- A demo do Gabriel (slide 10) é o momento mais importante do vídeo — mostrar o código rodando vale mais que qualquer slide bonito.
+- Se sobrar pouco tempo, pode cortar o slide 6 (o "porquê" da decisão de projeto) e resumir em uma frase dentro do slide 5.
 
 ---
 
@@ -27,119 +28,119 @@
 **Quem fala:** Davi
 **Tempo:** ~0:15
 
-> "Olá, professor. Somos o grupo formado por Davi, Gabriel, João Vitor e Nathan, e nesta apresentação vamos mostrar o Projeto Final: três extensões que implementamos em cima do compilador Fun da Atividade 10."
+> "Oi, professor! A gente é o grupo do Davi, Gabriel, João Vitor e Nathan, e hoje vamos mostrar o Projeto Final: três coisas novas que a gente adicionou no compilador Fun que já tínhamos pronto da Atividade 10."
 
 **Na tela:** slide com título, integrantes, disciplina, professor.
 
 ---
 
-## Slide 2 — O que mudou desde o Marco 1
+## Slide 2 — De onde a gente partiu
 **Quem fala:** Davi
-**Tempo:** ~0:35
+**Tempo:** ~0:30
 
-> "Desde o Marco 1, que cobriu até a Atividade 06 com o compilador EC1, o grupo entregou mais quatro atividades: a 07 trouxe precedência de operadores, tirando a obrigação de parentizar tudo; a 08 introduziu variáveis e a primeira análise semântica de verdade, com tabela de símbolos; a 09 acrescentou condicionais, laços e comparações, tornando a linguagem Turing-completa; e a 10 acrescentou funções — parâmetros, variáveis locais e recursão, com uma convenção de chamada baseada em pilha. O Projeto Final parte exatamente daí."
+> "Rapidinho pra situar: no Marco 1 a gente mostrou um compilador bem simples, só de expressões com números. Desde então fomos evoluindo isso atividade por atividade, até chegar num compilador de verdade — com variáveis, if, while, e na última atividade, funções, com parâmetros e até recursão. O Projeto Final é a gente pegando esse compilador de funções e deixando ele um pouco mais completo."
 
-**Na tela:** linha do tempo horizontal: EC1 (06) → EC2 (07) → EV (08) → Cmd (09) → Fun (10) → Projeto Final.
+**Na tela:** linha do tempo bem simples: expressões → variáveis → if/while → funções → **Projeto Final**.
 
 ---
 
-## Slide 3 — A linguagem Fun, rapidamente
+## Slide 3 — O que a gente escolheu adicionar
 **Quem fala:** Davi
-**Tempo:** ~0:25
+**Tempo:** ~0:30
 
-> "Fun é a linguagem da Atividade 10: funções com parâmetros, variáveis locais próprias e recursão direta, geradas com uma convenção de chamada em pilha e RBP como frame pointer. O objetivo do Projeto Final é escolher extensões — nós escolhemos três extensões simples, listadas na seção 1.1 do enunciado — e implementá-las mantendo toda a base de Fun funcionando sem regressão."
+> "O enunciado dava várias opções de coisas pra adicionar. A gente escolheu três, que achamos que deixam a linguagem bem mais fácil de programar de verdade: comparações novas, tipo `menor ou igual`; um jeito mais curto de fazer conta e guardar de volta na mesma variável; e a possibilidade de sair de uma função mais cedo com `return`, sem precisar esperar chegar no fim dela. Bora mostrar cada uma."
 
-**Na tela:** exemplo curto de Fun (`abs`/`fib`) + as três extensões escolhidas listadas: comparações novas, atribuição composta, `return` como comando.
-
----
-
-## Slide 4 — Extensão 1: novos operadores de comparação
-**Quem fala:** Nathan
-**Tempo:** ~0:40
-
-> "A primeira extensão acrescenta `<=`, `>=` e `!=`. No lexer, isso é só mais um lookahead de 1 caractere — a mesma técnica já usada para `==` desde a Atividade 09: ao ler `<`, `>` ou `!`, o lexer olha o caractere seguinte, e só consome o `=` se ele realmente estiver lá. `!` sozinho não existe em Fun, então vira erro léxico. No gerador de código, cada operador novo é só mais uma instrução `SETcc` — `setle`, `setge`, `setne` — reaproveitando o mesmo esquema de comparação que já existia."
-
-**Na tela:** trecho do lexer (`_ler_operador_composto`) + tabela dos 6 operadores com variante composta.
+**Na tela:** as três extensões em destaque, como uma lista simples: "1. Comparações novas · 2. Atalho pra somar/subtrair direto na variável · 3. Sair de uma função mais cedo".
 
 ---
 
-## Slide 5 — Extensão 2: atribuição composta
+## Slide 4 — Comparações novas
 **Quem fala:** Nathan
 **Tempo:** ~0:45
 
-> "A segunda extensão acrescenta `+=`, `-=`, `*=` e `/=`. A decisão de projeto mais importante aqui foi não criar nenhum nó de árvore novo: `x += 5` é desmontado, ainda no parser, em exatamente a mesma árvore que `x = x + 5` escrito por extenso. Isso significa que a análise semântica e o gerador de código não precisam saber que atribuição composta existe — e um teste garante que o assembly gerado pelas duas formas é byte a byte idêntico."
+> "A primeira coisa que a gente adicionou foram três comparações que a linguagem não tinha: `menor ou igual`, `maior ou igual` e `diferente`. Antes, se você quisesse testar 'menor ou igual', tinha que escrever de um jeito meio torto, combinando outras comparações. Agora dá pra escrever direto. Por trás dos panos foi bem tranquilo de fazer: a gente só ensinou o compilador a reconhecer esses símbolos novos, e reaproveitou praticamente todo o código que já traduzia as comparações antigas."
 
-**Na tela:** `x += 5;` ao lado de `x = x + 5;`, com uma seta mostrando que os dois viram o mesmo `Atrib(OpBin(...))`.
+**Na tela:** um `if` usando `<=` e `>=` de um jeito natural, tipo classificar uma nota ou idade.
 
 ---
 
-## Slide 6 — Por que açúcar sintático, e não um nó novo?
+## Slide 5 — Um atalho pra atualizar variáveis
+**Quem fala:** Nathan
+**Tempo:** ~0:45
+
+> "A segunda coisa foi um atalho bem comum em várias linguagens: em vez de escrever `total = total + 5`, agora dá pra escrever só `total += 5`. Mesma coisa pra subtração, multiplicação e divisão. Isso deixa o código bem mais limpo, principalmente dentro de laços, onde você fica atualizando a mesma variável várias vezes."
+
+**Na tela:** lado a lado, `total += 5;` e `total = total + 5;`, com uma seta mostrando que dá exatamente no mesmo resultado.
+
+---
+
+## Slide 6 — Um detalhe legal dessa implementação
 **Quem fala:** Nathan
 **Tempo:** ~0:20
 
-> "A pergunta que a gente se fez foi: vale a pena criar um `AtribComposta` com sua própria lógica de verificação e geração de código? A resposta foi não — um `Atrib` já representa perfeitamente uma atribuição, a única diferença é como o valor é calculado. Menos código, e a prova de corretude fica trivial de escrever."
+> "Um detalhe que achamos interessante: a gente não criou nada novo por trás — o `+=` simplesmente vira, na hora de compilar, a mesma coisa que `total = total + 5`. Ou seja, zero código novo pra gerar o assembly disso, só reaproveitamos o que já existia. E testamos justamente isso: que as duas formas geram o mesmo resultado, sem nenhuma diferença."
 
-**Na tela:** citação da seção "Decisões de projeto" do RELATORIO.md (resumida).
-
----
-
-## Slide 7 — Extensão 3: o problema do `return` como comando
-**Quem fala:** João Vitor
-**Tempo:** ~0:40
-
-> "A terceira extensão foi a mais delicada: permitir `return` dentro de um `if` ou `while`, não só como a última instrução obrigatória do corpo. O problema é que a gramática original de Fun sempre termina o corpo de uma função com um `return` obrigatório, fora da lista de comandos. Se a gente simplesmente deixasse `return` aparecer em qualquer lugar, o parser não saberia mais dizer qual `return` é o final e qual é antecipado."
-
-**Na tela:** a gramática original de Fun com o `return` obrigatório destacado, e a pergunta "qual é o do meio, e qual é o do fim?".
+**Na tela:** frase curta em destaque: "x += 5 vira exatamente x = x + 5 por baixo dos panos."
 
 ---
 
-## Slide 8 — A solução: peek de 1 token
-**Quem fala:** João Vitor
-**Tempo:** ~0:40
-
-> "A solução foi olhar o token logo depois do `;` de cada `return`: se for `}`, é o obrigatório, encerra o corpo. Se não for, é um retorno antecipado, vira um comando comum, e o parser continua. Dentro de um `if` ou `while` não existe essa ambiguidade — lá, todo `return` é sempre antecipado, porque um bloco aninhado nunca tem uma expressão final própria."
-
-**Na tela:** pseudocódigo de `_analisa_corpo()` (a decisão do peek) + o exemplo `sinal(n)` usando `return` dentro de dois `if`s.
-
----
-
-## Slide 9 — Geração de código do `return` antecipado
+## Slide 7 — Saindo de uma função mais cedo
 **Quem fala:** João Vitor
 **Tempo:** ~0:35
 
-> "No gerador de código, cada função — e o bloco `main` — ganha um rótulo de saída fixo, `Lfim_<nome>`, logo antes do epílogo. Um `return` antecipado só calcula sua expressão e dá um `jmp` direto pra esse rótulo, pulando o resto dos comandos. Quando a função não usa retorno antecipado, o rótulo simplesmente não vira alvo de nenhum `jmp` — o assembler aceita de boa."
+> "A terceira e mais legal das três: antes, uma função só podia terminar com um `return` bem no finalzinho dela. Se você quisesse sair mais cedo — por exemplo, dentro de um `if` — não dava. Tinha que usar uma variável auxiliar pra guardar o resultado até chegar no fim. Agora a gente pode simplesmente escrever `return` ali dentro do `if`, e a função já encerra ali, devolvendo aquele valor na hora."
 
-**Na tela:** trecho de assembly de `classifica` mostrando `jmp Lfim_classifica` e o rótulo antes do epílogo.
+**Na tela:** um exemplo simples tipo "checar o sinal de um número", mostrando quanto o código fica mais direto com `return` dentro do `if`.
 
 ---
 
-## Slide 10 — Demo: as três extensões juntas
+## Slide 8 — O desafio de fazer isso funcionar
+**Quem fala:** João Vitor
+**Tempo:** ~0:40
+
+> "O desafio aqui foi que, antes, `return` só existia em um lugar bem específico: o finalzinho da função. Agora ele podia aparecer em vários lugares diferentes, e o compilador precisava saber diferenciar: 'esse `return` aqui é o que encerra a função de vez, ou é um dos que aparecem no meio do caminho?'. A solução foi bem simples na prática: o compilador olha o que vem logo depois daquele `return` — se for o fechamento da função, é o último mesmo; se não for, é um dos antecipados, e ele continua lendo o resto normalmente."
+
+**Na tela:** o mesmo exemplo do slide anterior, com uma seta apontando "esse aqui é antecipado" e outra "esse aqui é o de verdade, o último".
+
+---
+
+## Slide 9 — Como isso vira código de máquina
+**Quem fala:** João Vitor
+**Tempo:** ~0:30
+
+> "Na prática, cada função ganhou um 'ponto de saída' fixo no código gerado. Quando um `return` antecipado acontece, ele simplesmente pula direto pra esse ponto de saída, sem passar pelo resto da função. É basicamente um atalho dentro do próprio código de máquina, do mesmo jeito que a gente faz na cabeça quando pensa 'ah, já achei a resposta, posso parar por aqui'."
+
+**Na tela:** bem simples: uma seta saindo do meio da função e indo direto pro fim, ignorando o resto.
+
+---
+
+## Slide 10 — Mostrando tudo funcionando junto
 **Quem fala:** Gabriel
-**Tempo:** ~0:50
+**Tempo:** ~0:55
 
-> "Vou mostrar as três funcionando juntas. Esse programa classifica um número em três faixas usando `<=` e `>=`, sai antecipadamente de cada `if` com `return`, e acumula o resultado com `+=`. Compilando, o gerador produz esse assembly — repara no `setle`, no `jmp Lfim_classifica`, e no fato de que `contador += classifica(...)` gera exatamente o mesmo código que `contador = contador + classifica(...)` geraria."
+> "Bom, chega de falar, bora ver funcionando. Fiz um programinha que usa as três coisas ao mesmo tempo: ele classifica um número em três faixas, usando as comparações novas; sai da função mais cedo com `return` assim que descobre a resposta; e usa o `+=` pra ir somando um contador. Vou compilar aqui e mostrar o resultado."
 
-**Na tela:** terminal com `python compfun.py exemplos/valido8_extensoes_combinadas.fun` + trecho do `.s` gerado, destacando `setle`, `jmp Lfim_classifica` e a limpeza de pilha do `+=`.
+**Na tela:** o código-fonte de um lado, o comando `python compfun.py ...` rodando, e o resultado final aparecendo (imprime `3`).
 
 ---
 
-## Slide 11 — Testes
+## Slide 11 — E continua tudo funcionando como antes
 **Quem fala:** Gabriel
 **Tempo:** ~0:35
 
-> "A suíte inteira da Atividade 10 continua passando sem nenhuma alteração — 40 testes, zero regressão — e acrescentamos 26 testes novos, total de 66. O destaque continua sendo o simulador de equivalência semântica: ele já tinha pego dois bugs reais durante a Atividade 10, e aqui só precisou de três linhas novas — `setle`, `setge`, `setne` — pra validar as três extensões contra o interpretador de referência, incluindo `return` antecipado dentro de recursão."
+> "E o mais importante: a gente não quebrou nada do que já existia. Todos os testes que já tínhamos da Atividade 10 continuam passando exatamente igual, e ainda escrevemos um bocado de testes novos só pras três coisas que adicionamos — no total, 66 testes, todos passando."
 
-**Na tela:** saída de `python tests/test_fun.py` mostrando `Ran 66 tests ... OK`.
+**Na tela:** terminal rodando os testes, mostrando `Ran 66 tests ... OK`.
 
 ---
 
-## Slide 12 — Escopo e o que ficou de fora
+## Slide 12 — Por que só essas três
 **Quem fala:** Gabriel
 **Tempo:** ~0:20
 
-> "O enunciado pedia uma extensão média/alta ou pelo menos três simples — escolhemos o caminho de três simples, mantendo o escopo controlado: nenhuma delas exige tipo novo, então a análise de tipos e o modelo de memória não mudaram em nada."
+> "O enunciado dava a opção de fazer uma coisa mais complexa, ou pelo menos três mais simples. A gente preferiu as três simples, porque são mudanças que realmente ajudam quem for programar na linguagem, sem precisar reinventar um monte de coisa por trás — deu pra fazer com calma e testar direito tudo o que mudou."
 
-**Na tela:** lista das extensões NÃO escolhidas (operadores lógicos, strings, booleanos, etc.) riscada, ao lado das três escolhidas.
+**Na tela:** as três extensões escolhidas, simples e direto.
 
 ---
 
@@ -147,7 +148,7 @@
 **Quem fala:** (qualquer um, sugerimos Davi)
 **Tempo:** ~0:15
 
-> "Com isso fechamos o Projeto Final: comparações novas, atribuição composta e `return` como comando, tudo em cima do compilador Fun que construímos desde a Atividade 04. Repositório e relatório completo na descrição. Obrigado!"
+> "É isso! Deixamos o compilador Fun um pouco mais completo com essas três novidades. O código todo, com os testes e a documentação, tá no repositório na descrição. Valeu, professor!"
 
 **Na tela:** link do repo + nomes dos integrantes.
 
