@@ -71,7 +71,8 @@ CompilerConstruction_UFPB/
 │   └── parte2_respostas.md
 ├── expressoes-constantes/   # Assignment 04 - Constant Expressions 1 (Lexer)
 │   ├── lexer.py
-│   ├── test lexer.py
+│   ├── exemplos/
+│   ├── tests/test_lexer.py
 │   ├── README.md
 │   ├── RELATORIO.md
 │   └── PLANO.md
@@ -173,6 +174,10 @@ detailed instructions. The common cases:
 cd compilador-ci
 python compci.py testes/p1.ci     # writes testes/p1.s
 
+# Assignment 04 — tokenize an EC1 expression
+cd expressoes-constantes
+python lexer.py exemplos/valido1.ec1   # prints each token, one per line
+
 # Assignment 05 — parse and evaluate an EC1 expression
 cd analise-sintatica-ec1
 python ec1.py exemplos/valido3.ec1   # prints 10065
@@ -202,6 +207,7 @@ cd projeto-final
 python compfun.py exemplos/valido8_extensoes_combinadas.fun   # writes .s (evaluates to 3)
 
 # Run each assignment's test suite
+python tests/test_lexer.py                # in expressoes-constantes/
 python tests/test_parser.py               # in analise-sintatica-ec1/
 python tests/test_codegen.py              # in compilador-ec1/
 python tests/test_parser_precedencia.py   # in compilador-ec2/
