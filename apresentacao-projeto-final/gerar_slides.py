@@ -240,7 +240,7 @@ def slide_capa(prs):
 
 def slide_desde_marco1(prs):
     s = new_blank_slide(prs)
-    add_section_header(s, "Contexto", "O que mudou desde o Marco 1")
+    add_section_header(s, "Contexto", "De onde a gente partiu")
 
     y = Inches(2.3)
     h = Inches(1.0)
@@ -249,11 +249,11 @@ def slide_desde_marco1(prs):
     box_w = (CONTENT_W - gap * (n - 1)) // n
     x = MARGIN_X
     items = [
-        ("EC1\n(Marco 1)", COLOR_MUTED),
-        ("EC2 (07)\nprecedência", COLOR_PRIMARY),
-        ("EV (08)\nvariáveis", COLOR_PRIMARY),
-        ("Cmd (09)\nTuring-completa", COLOR_PRIMARY),
-        ("Fun (10)\nfunções", COLOR_PRIMARY),
+        ("Marco 1\nsó expressões", COLOR_MUTED),
+        ("Depois\nvariáveis", COLOR_PRIMARY),
+        ("Depois\nif / while", COLOR_PRIMARY),
+        ("Atividade 10\nfunções", COLOR_PRIMARY),
+        ("Agora\nProjeto Final", COLOR_PRIMARY),
     ]
     for i, (label, bg) in enumerate(items):
         rect = add_filled_rect(s, x, y, box_w, h, bg)
@@ -284,30 +284,28 @@ def slide_desde_marco1(prs):
     add_multiline(
         s, MARGIN_X, Inches(3.7), CONTENT_W, Inches(3.2),
         [
-            {"text": "07 — Precedência: exp_a/exp_m tiram a obrigação de "
-                     "parentizar tudo.", "bullet": True},
-            {"text": "08 — Variáveis + primeira análise semântica de verdade "
-                     "(tabela de símbolos).", "bullet": True},
-            {"text": "09 — Condicionais, laços e comparações: Cmd é a primeira "
-                     "linguagem Turing-completa da série.", "bullet": True},
-            {"text": "10 — Funções: parâmetros, variáveis locais, recursão "
-                     "direta, convenção de chamada em pilha com RBP.",
-             "bullet": True},
-            {"text": "Projeto Final — parte exatamente daqui.",
-             "bullet": True, "bold": True, "color": COLOR_OK},
+            {"text": "No Marco 1, o compilador só entendia contas com "
+                     "números.", "bullet": True},
+            {"text": "Depois foi ganhando variáveis, if, while — até virar "
+                     "uma linguagem de verdade.", "bullet": True},
+            {"text": "Na última atividade, chegamos em funções: com "
+                     "parâmetros e até recursão.", "bullet": True},
+            {"text": "O Projeto Final é a gente melhorando esse compilador "
+                     "de funções.", "bullet": True, "bold": True,
+             "color": COLOR_OK},
         ],
-        font_size=16,
+        font_size=17,
     )
     add_footer(s, 2, TOTAL_SLIDES, "Davi")
 
 
 def slide_fun_rapido(prs):
     s = new_blank_slide(prs)
-    add_section_header(s, "Ponto de partida", "A linguagem Fun, rapidamente")
+    add_section_header(s, "As novidades", "O que a gente escolheu adicionar")
     col_w = (CONTENT_W - Inches(0.6)) // 2
     add_textbox(
         s, MARGIN_X, Inches(2.0), col_w, Inches(0.4),
-        "Exemplo (Atividade 10)", font_size=16, bold=True, color=COLOR_ACCENT,
+        "Um programa em Fun", font_size=16, bold=True, color=COLOR_ACCENT,
     )
     add_code_panel(
         s, MARGIN_X, Inches(2.5), col_w, Inches(3.4),
@@ -325,20 +323,21 @@ def slide_fun_rapido(prs):
     right_x = MARGIN_X + col_w + Inches(0.6)
     add_textbox(
         s, right_x, Inches(2.0), col_w, Inches(0.4),
-        "As três extensões escolhidas", font_size=16, bold=True,
+        "As três coisas que adicionamos", font_size=16, bold=True,
         color=COLOR_ACCENT,
     )
     add_multiline(
         s, right_x, Inches(2.5), col_w, Inches(3.4),
         [
-            {"text": "1. Comparações novas: <=, >=, !=", "bullet": True, "size": 17},
-            {"text": "2. Atribuição composta: +=, -=, *=, /=",
+            {"text": "1. Comparações novas (menor ou igual, etc.)",
              "bullet": True, "size": 17},
-            {"text": "3. return como comando (retorno antecipado)",
+            {"text": "2. Um atalho pra atualizar variáveis (+=, -=...)",
+             "bullet": True, "size": 17},
+            {"text": "3. Sair de uma função mais cedo com return",
              "bullet": True, "size": 17},
             {"text": "", "size": 8},
-            {"text": "Critério: nenhuma exige tipo novo — escopo contido, "
-                     "toda a base de Fun continua funcionando sem regressão.",
+            {"text": "Todas deixam a linguagem mais fácil de usar no "
+                     "dia a dia, sem mudar nada do que já funcionava.",
              "italic": True, "color": COLOR_MUTED, "size": 14},
         ],
         line_spacing=1.3,
@@ -348,67 +347,60 @@ def slide_fun_rapido(prs):
 
 def slide_ext1_comparacoes(prs):
     s = new_blank_slide(prs)
-    add_section_header(s, "Extensão 1", "Novos operadores de comparação")
+    add_section_header(s, "Extensão 1", "Comparações novas")
     add_multiline(
-        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(0.7),
-        [{"text": "<=, >= e != — mesmo lookahead de 1 caractere já usado "
-                  "para == desde a Atividade 09.", "size": 17}],
+        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(0.9),
+        [{"text": "A linguagem já tinha 'menor que', 'maior que' e 'igual'. "
+                  "Faltavam três bem comuns:", "size": 18}],
     )
     add_code_panel(
-        s, MARGIN_X, Inches(2.8), Inches(7.0), Inches(2.6),
-        "_OPERADOR_COMPOSTO = {\n"
-        '    "<": (MENOR, MENOR_IGUAL),\n'
-        '    ">": (MAIOR, MAIOR_IGUAL),\n'
-        "    ...\n"
-        "}\n"
-        "# le o caractere seguinte sem\n"
-        "# avancar ate decidir",
-        font_size=14,
+        s, MARGIN_X, Inches(2.9), Inches(6.6), Inches(2.4),
+        "<=   menor ou igual\n"
+        ">=   maior ou igual\n"
+        "!=   diferente",
+        font_size=20,
     )
     add_textbox(
-        s, Inches(8.2), Inches(2.8), Inches(4.6), Inches(0.4),
-        "Codegen: só mais um SETcc", font_size=15, bold=True,
+        s, Inches(7.8), Inches(2.9), Inches(5.0), Inches(0.4),
+        "Exemplo de uso", font_size=15, bold=True,
         color=COLOR_ACCENT,
     )
     add_code_panel(
-        s, Inches(8.2), Inches(3.2), Inches(4.6), Inches(2.2),
-        "<=  →  setle %cl\n"
-        ">=  →  setge %cl\n"
-        "!=  →  setne %cl",
-        font_size=15,
+        s, Inches(7.8), Inches(3.3), Inches(5.0), Inches(2.0),
+        "if idade >= 60 {\n"
+        "  return 2;\n"
+        "}",
+        font_size=16,
     )
     add_multiline(
         s, MARGIN_X, Inches(5.7), CONTENT_W, Inches(1.2),
-        [{"text": "'!' sozinho não existe em Fun (sem operador de negação) "
-                  "— vira erro léxico.", "bullet": True, "size": 15}],
+        [{"text": "Por dentro, foi tranquilo: reaproveitamos quase todo o "
+                  "código que já traduzia as comparações antigas.",
+          "bullet": True, "size": 15}],
     )
     add_footer(s, 4, TOTAL_SLIDES, "Nathan")
 
 
 def slide_ext2_atribuicao(prs):
     s = new_blank_slide(prs)
-    add_section_header(s, "Extensão 2", "Atribuição composta")
+    add_section_header(s, "Extensão 2", "Um atalho pra atualizar variáveis")
     add_multiline(
-        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(0.6),
-        [{"text": "+=, -=, *=, /= — desmontados no PARSER, sem nó de AST novo.",
-          "size": 17}],
+        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(0.7),
+        [{"text": "Em vez de repetir o nome da variável duas vezes, agora dá "
+                  "pra escrever direto:", "size": 18}],
     )
     add_code_panel(
-        s, MARGIN_X, Inches(2.8), CONTENT_W, Inches(2.2),
-        "x += 5;              vira exatamente       x = x + 5;\n"
-        "\n"
-        "Atrib(x, OpBin(SOMA, Var(x), Const(5)))",
-        font_size=16,
+        s, MARGIN_X, Inches(2.9), CONTENT_W, Inches(1.8),
+        "total += 5;      é a mesma coisa que      total = total + 5;",
+        font_size=17,
     )
     add_multiline(
-        s, MARGIN_X, Inches(5.4), CONTENT_W, Inches(1.6),
+        s, MARGIN_X, Inches(5.1), CONTENT_W, Inches(1.9),
         [
-            {"text": "Semântica e codegen não mudam nada — processam o Atrib "
-                     "resultante como sempre processaram.", "bullet": True,
-             "size": 16},
-            {"text": "Teste garante: assembly de x += 5; é byte a byte idêntico "
-                     "ao de x = x + 5;", "bullet": True, "size": 16,
-             "color": COLOR_OK},
+            {"text": "Funciona também com -=, *= e /=.", "bullet": True,
+             "size": 17},
+            {"text": "Deixa o código bem mais limpo, principalmente dentro "
+                     "de laços.", "bullet": True, "size": 17},
         ],
     )
     add_footer(s, 5, TOTAL_SLIDES, "Nathan")
@@ -416,21 +408,20 @@ def slide_ext2_atribuicao(prs):
 
 def slide_ext2_por_que(prs):
     s = new_blank_slide(prs)
-    add_section_header(s, "Extensão 2", "Por que açúcar sintático?")
+    add_section_header(s, "Extensão 2", "Um detalhe legal dessa implementação")
     add_multiline(
-        s, MARGIN_X, Inches(2.2), CONTENT_W, Inches(3.5),
+        s, MARGIN_X, Inches(2.4), CONTENT_W, Inches(3.0),
         [
-            {"text": "Alternativa considerada: um nó AtribComposta próprio, "
-                     "com sua própria verificação semântica e geração de "
-                     "código.", "size": 17},
+            {"text": "A gente não criou nada novo por trás dos panos.",
+             "size": 19, "bold": True, "color": COLOR_PRIMARY},
             {"text": "", "size": 10},
-            {"text": "Por que não: um Atrib já representa perfeitamente uma "
-                     "atribuição — a única diferença é como o valor é "
-                     "calculado, não que tipo de comando é.", "size": 17},
+            {"text": "O += simplesmente vira, na hora de compilar, a mesma "
+                     "coisa que escrever por extenso — zero código novo pra "
+                     "gerar o resultado.", "size": 18},
             {"text": "", "size": 10},
-            {"text": "Resultado: menos código, e a prova de corretude fica "
-                     "trivial (compara o assembly das duas formas).",
-             "size": 17, "color": COLOR_OK, "bold": True},
+            {"text": "E testamos justamente isso: as duas formas geram "
+                     "exatamente o mesmo resultado, sem diferença nenhuma.",
+             "size": 18, "color": COLOR_OK},
         ],
         line_spacing=1.35,
     )
@@ -439,51 +430,41 @@ def slide_ext2_por_que(prs):
 
 def slide_ext3_problema(prs):
     s = new_blank_slide(prs)
-    add_section_header(s, "Extensão 3", "return como comando: o problema")
-    add_code_panel(
-        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(1.6),
-        "<corpo> ::= <cmd>* 'return' <exp> ';' '}'\n"
-        "                        ^^^^^^ obrigatorio, sempre por ultimo",
-        font_size=16,
-    )
+    add_section_header(s, "Extensão 3", "Saindo de uma função mais cedo")
     add_multiline(
-        s, MARGIN_X, Inches(4.0), CONTENT_W, Inches(2.8),
-        [
-            {"text": "Queremos permitir return também dentro de if/while, "
-                     "não só como última instrução.", "size": 17},
-            {"text": "", "size": 10},
-            {"text": "Problema: se return pode aparecer em qualquer lugar, "
-                     "como o parser sabe qual é o obrigatório (o do fim) e "
-                     "qual é antecipado?", "size": 17, "italic": True,
-             "color": COLOR_MUTED},
-        ],
-        line_spacing=1.3,
+        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(1.4),
+        [{"text": "Antes, uma função só podia terminar com return bem no "
+                  "finalzinho dela. Se quisesse sair mais cedo — de dentro "
+                  "de um if, por exemplo — não dava.",
+          "size": 18}],
     )
-    add_footer(s, 7, TOTAL_SLIDES, "João Vitor")
-
-
-def slide_ext3_solucao(prs):
-    s = new_blank_slide(prs)
-    add_section_header(s, "Extensão 3", "A solução: peek de 1 token")
-    add_code_panel(
-        s, MARGIN_X, Inches(2.0), Inches(7.2), Inches(3.4),
-        "ao encontrar 'return':\n"
-        "  consome 'return' <exp> ';'\n"
-        "  olha o token seguinte\n"
-        "  se for '}':\n"
-        "    e o return FINAL -> vira exp_final\n"
-        "  senao:\n"
-        "    e um return ANTECIPADO -> vira Cmd Return\n"
-        "    continua reconhecendo comandos",
-        font_size=14,
-    )
+    col_w = (CONTENT_W - Inches(0.6)) // 2
     add_textbox(
-        s, Inches(8.4), Inches(2.0), Inches(4.4), Inches(0.4),
-        "sinal(n) usando return", font_size=15, bold=True,
-        color=COLOR_ACCENT,
+        s, MARGIN_X, Inches(3.3), col_w, Inches(0.4),
+        "Antes: precisava de uma variável extra", font_size=14, bold=True,
+        color=COLOR_MUTED,
     )
     add_code_panel(
-        s, Inches(8.4), Inches(2.4), Inches(4.4), Inches(3.0),
+        s, MARGIN_X, Inches(3.7), col_w, Inches(2.9),
+        "fun sinal(n) {\n"
+        "  var r = 0;\n"
+        "  if n < 0 { r = 0-1; }\n"
+        "  else {\n"
+        "    if n == 0 { r = 0; }\n"
+        "    else { r = 1; }\n"
+        "  }\n"
+        "  return r;\n"
+        "}",
+        font_size=13,
+    )
+    right_x = MARGIN_X + col_w + Inches(0.6)
+    add_textbox(
+        s, right_x, Inches(3.3), col_w, Inches(0.4),
+        "Agora: sai na hora", font_size=14, bold=True,
+        color=COLOR_OK,
+    )
+    add_code_panel(
+        s, right_x, Inches(3.7), col_w, Inches(2.9),
         "fun sinal(n) {\n"
         "  if n < 0 {\n"
         "    return 0-1;\n"
@@ -495,42 +476,65 @@ def slide_ext3_solucao(prs):
         "}",
         font_size=13,
     )
+    add_footer(s, 7, TOTAL_SLIDES, "João Vitor")
+
+
+def slide_ext3_solucao(prs):
+    s = new_blank_slide(prs)
+    add_section_header(s, "Extensão 3", "O desafio de fazer isso funcionar")
     add_multiline(
-        s, MARGIN_X, Inches(5.7), CONTENT_W, Inches(1.2),
-        [{"text": "Dentro de if/while não há ambiguidade: lá, todo return é "
-                  "sempre antecipado.", "bullet": True, "size": 15}],
+        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(1.6),
+        [{"text": "O compilador só conhecia um tipo de return: o do "
+                  "finalzinho. Agora ele precisa diferenciar: esse return "
+                  "aqui é o que encerra tudo, ou é um dos que aparecem no "
+                  "meio do caminho?", "size": 18}],
+    )
+    add_code_panel(
+        s, MARGIN_X, Inches(3.6), CONTENT_W, Inches(3.0),
+        "fun sinal(n) {\n"
+        "  if n < 0 { return 0-1; } else {}   <- antecipado, tem mais coisa depois\n"
+        "  if n == 0 { return 0; } else {}    <- antecipado, tem mais coisa depois\n"
+        "  return 1;                          <- esse sim e o ultimo de verdade\n"
+        "}",
+        font_size=13,
+    )
+    add_multiline(
+        s, MARGIN_X, Inches(6.7), CONTENT_W, Inches(0.6),
+        [{"text": "A solução: o compilador olha o que vem logo depois de "
+                  "cada return pra decidir qual é qual.",
+          "bullet": True, "size": 15, "color": COLOR_OK}],
     )
     add_footer(s, 8, TOTAL_SLIDES, "João Vitor")
 
 
 def slide_ext3_codegen(prs):
     s = new_blank_slide(prs)
-    add_section_header(s, "Extensão 3", "Geração de código do return antecipado")
+    add_section_header(s, "Extensão 3", "Como isso vira código de máquina")
+    add_multiline(
+        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(1.2),
+        [{"text": "Cada função ganhou um 'ponto de saída' fixo. Quando um "
+                  "return antecipado acontece, ele pula direto pra lá.",
+          "size": 18}],
+    )
     add_code_panel(
-        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(3.6),
-        "<nome>:\n"
-        "    push %rbp\n"
-        "    ...\n"
-        "    <comandos, pode conter Return>\n"
-        "    <expressao final>\n"
-        "Lfim_<nome>:              # rotulo de saida, SEMPRE emitido\n"
-        "    add $8*L, %rsp        # epilogo (igual Atividade 10)\n"
-        "    pop %rbp\n"
-        "    ret",
-        font_size=15,
+        s, MARGIN_X, Inches(3.2), CONTENT_W, Inches(2.6),
+        "return 0 - 1;\n"
+        "    → calcula o valor\n"
+        "    → pula direto pro fim da função (ignora o resto)",
+        font_size=17,
     )
     add_multiline(
-        s, MARGIN_X, Inches(5.9), CONTENT_W, Inches(1.2),
-        [{"text": "Um Return so calcula a expressao (em %rax) e da jmp direto "
-                  "pra Lfim_<nome> — pula o resto do corpo.",
-          "bullet": True, "size": 16}],
+        s, MARGIN_X, Inches(6.0), CONTENT_W, Inches(1.0),
+        [{"text": "É tipo quando a gente pensa 'já achei a resposta, posso "
+                  "parar por aqui' — só que em assembly.",
+          "bullet": True, "size": 16, "italic": True, "color": COLOR_MUTED}],
     )
     add_footer(s, 9, TOTAL_SLIDES, "João Vitor")
 
 
 def slide_demo(prs):
     s = new_blank_slide(prs)
-    add_section_header(s, "Demo", "As três extensões juntas")
+    add_section_header(s, "Demo", "Mostrando tudo funcionando junto")
     add_textbox(
         s, MARGIN_X, Inches(2.0), Inches(6.2), Inches(0.4),
         "$ python compfun.py exemplos/valido8_extensoes_combinadas.fun",
@@ -584,14 +588,14 @@ def slide_demo(prs):
 
 def slide_testes(prs):
     s = new_blank_slide(prs)
-    add_section_header(s, "Validação", "Testes")
+    add_section_header(s, "Confiança", "E continua tudo funcionando como antes")
     add_multiline(
-        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(0.8),
-        [{"text": "40 testes da Atividade 10 continuam passando sem nenhuma "
-                  "alteração — zero regressão.", "size": 17}],
+        s, MARGIN_X, Inches(2.0), CONTENT_W, Inches(0.9),
+        [{"text": "O mais importante: a gente não quebrou nada do que já "
+                  "existia.", "size": 18, "bold": True, "color": COLOR_PRIMARY}],
     )
     add_code_panel(
-        s, MARGIN_X, Inches(2.9), CONTENT_W, Inches(2.1),
+        s, MARGIN_X, Inches(3.0), CONTENT_W, Inches(2.1),
         "$ python tests/test_fun.py\n"
         "----------------------------------------------------------------------\n"
         "Ran 66 tests in 2.0s\n"
@@ -600,14 +604,12 @@ def slide_testes(prs):
         font_size=16,
     )
     add_multiline(
-        s, MARGIN_X, Inches(5.3), CONTENT_W, Inches(1.8),
+        s, MARGIN_X, Inches(5.4), CONTENT_W, Inches(1.6),
         [
-            {"text": "+26 testes novos cobrindo as três extensões, incluindo "
-                     "um caso combinado e return antecipado dentro de "
-                     "recursão.", "bullet": True, "size": 16},
-            {"text": "O simulador de equivalência semântica (que já pegou 2 "
-                     "bugs reais na Atividade 10) só precisou de 3 linhas "
-                     "novas — setle/setge/setne.", "bullet": True, "size": 16,
+            {"text": "Todos os testes de antes continuam passando do mesmo "
+                     "jeito.", "bullet": True, "size": 16},
+            {"text": "E escrevemos vários testes novos só pras três coisas "
+                     "que adicionamos.", "bullet": True, "size": 16,
              "color": COLOR_OK},
         ],
     )
@@ -616,43 +618,27 @@ def slide_testes(prs):
 
 def slide_escopo(prs):
     s = new_blank_slide(prs)
-    add_section_header(s, "Escopo", "O que ficou de fora")
+    add_section_header(s, "Pra fechar", "Por que só essas três")
     add_multiline(
-        s, MARGIN_X, Inches(2.2), CONTENT_W, Inches(1.0),
-        [{"text": "Enunciado: 1 extensão média/alta OU pelo menos 3 simples "
-                  "— escolhemos 3 simples.", "size": 17}],
-    )
-    col_w = (CONTENT_W - Inches(0.6)) // 2
-    add_textbox(
-        s, MARGIN_X, Inches(3.3), col_w, Inches(0.4),
-        "Escolhidas", font_size=15, bold=True, color=COLOR_OK,
+        s, MARGIN_X, Inches(2.2), CONTENT_W, Inches(1.2),
+        [{"text": "O enunciado dava a opção de fazer uma coisa mais "
+                  "complexa, ou pelo menos três mais simples. A gente "
+                  "preferiu as três simples.", "size": 18}],
     )
     add_multiline(
-        s, MARGIN_X, Inches(3.8), col_w, Inches(2.5),
+        s, MARGIN_X, Inches(3.7), CONTENT_W, Inches(2.6),
         [
-            {"text": "<=, >=, !=", "bullet": True, "size": 16},
-            {"text": "+=, -=, *=, /=", "bullet": True, "size": 16},
-            {"text": "return como comando", "bullet": True, "size": 16},
+            {"text": "Comparações novas", "bullet": True, "size": 18},
+            {"text": "Atalho pra atualizar variáveis", "bullet": True,
+             "size": 18},
+            {"text": "Sair de uma função mais cedo", "bullet": True,
+             "size": 18},
+            {"text": "", "size": 10},
+            {"text": "São mudanças que ajudam de verdade quem for programar "
+                     "na linguagem — e deu pra testar tudo com calma.",
+             "size": 17, "italic": True, "color": COLOR_MUTED},
         ],
-    )
-    right_x = MARGIN_X + col_w + Inches(0.6)
-    add_textbox(
-        s, right_x, Inches(3.3), col_w, Inches(0.4),
-        "Não escolhidas (fora de escopo)", font_size=15, bold=True,
-        color=COLOR_MUTED,
-    )
-    add_multiline(
-        s, right_x, Inches(3.8), col_w, Inches(2.5),
-        [
-            {"text": "Operadores lógicos (E, OU, NÃO)", "bullet": True,
-             "size": 16, "color": COLOR_MUTED},
-            {"text": "Strings e booleanos como tipo", "bullet": True,
-             "size": 16, "color": COLOR_MUTED},
-            {"text": "Funções primitivas pré-definidas", "bullet": True,
-             "size": 16, "color": COLOR_MUTED},
-            {"text": "Qualquer extensão média/alta", "bullet": True,
-             "size": 16, "color": COLOR_MUTED},
-        ],
+        line_spacing=1.3,
     )
     add_footer(s, 12, TOTAL_SLIDES, "Gabriel")
 
